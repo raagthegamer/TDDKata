@@ -43,7 +43,27 @@ class SumTest {
 	public void throwExceptionOnNegativeInput() throws Exception {
 		assertEquals("java.lang.Exception: negatives not allowed -1 -2 -3",
 				assertThrows(Exception.class, () -> Sum.add("-1, -2, -3")).toString());
+	}
 
+	@Test
+	public void ignoreNumbersGreaterThanOneThousand() throws Exception {
+		assertEquals(2, Sum.add("2, 1001"));
+	}
+
+	@Test
+	public void allowDelimeterOfAnyLength() throws Exception {
+		assertEquals(6, Sum.add("//[***]\n1***2***3"));
+	}
+
+	@Test
+	public void allowMultipleDelimeters() throws Exception {
+		assertEquals(6, Sum.add("//[*][%]\n1*2%3"));
+	}
+	
+	@Test
+	public void allowMultipleDelimetersOfMoreThanOneChar() throws Exception
+	{
+		assertEquals(6, Sum.add("//[***][%%]\n1***2%%3"));
 	}
 
 }
